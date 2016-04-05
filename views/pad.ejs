@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Realtime Markdown Viewer</title>
+    <link href="bootstrap.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+    <nav>
+        <div class="logo">
+            <p>md.editor</p>
+            <img src="logo_small.png">
+        </div>
+        <button id="signinButton">Sign In</button>
+    </nav>
+    
+    <div class="container-fluid">
+        <div class="row">
+            <textarea class="col-md-6 hidden-sm hidden-xs full-height" id="pad"><% for(var i = 0; i < content.length; i++) { %>
+<%- content[i] -%>
+<% } %>
+            </textarea>
+            <div class="col-md-6 full-height" id="markdown"></div>
+        </div>
+    </div>
+    
+    <div id="signinModal" class="modal">
+        <div class="modal-content">
+            <span class="close">x</span>
+            <h1>Login</h1>
+            <form>
+            <p>Email: </p><input type="text" name="email"><br>
+            <p>Password: </p><input type="password" name="password"><br>
+            <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+    
+    <script src="showdown.min.js"></script>
+    <script src="script.js"></script>
+
+</body>
+</html>
