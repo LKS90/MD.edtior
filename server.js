@@ -6,7 +6,6 @@ var LocalStrategy = require('passport-local');
 var app = express();
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(app.router);
 
 // passport config
 var Account = require('./models/account');
