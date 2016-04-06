@@ -1,6 +1,6 @@
 var express = require('express');
 var passport = require('passport');
-var db = require('mongoose').MongoClient;
+var mongoose = require('mongoose').MongoClient;
 var LocalStrategy = require('passport-local');
 
 var app = express();
