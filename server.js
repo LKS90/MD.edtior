@@ -4,7 +4,6 @@ var db = require('mongoose').MongoClient;
 var LocalStrategy = require('passport-local');
 
 var app = express();
-app.use(express.logger());
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser('your secret here'));
