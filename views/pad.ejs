@@ -39,6 +39,10 @@
     
     <script src="showdown.min.js"></script>
     <script src="script.js"></script>
-
+    <script>
+<% if (login) { %>
+document.getElementById("signinModal").style.display = "block"
+<% } %>
+    </script>
 </body>
 </html>

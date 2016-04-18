@@ -1,3 +1,12 @@
+// Get the modal
+var modal = document.getElementById('signinModal');
+
+// Get the button that opens the modal
+var btn = document.getElementById("signinButton");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
 window.onload = function() {
     var converter = new showdown.Converter({strikethrough: true, tables: true});
     var pad = document.getElementById('pad');
@@ -13,15 +22,6 @@ window.onload = function() {
 
     convertTextAreaToMarkdown();
 };
-
-// Get the modal
-var modal = document.getElementById('signinModal');
-
-// Get the button that opens the modal
-var btn = document.getElementById("signinButton");
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
 
 // When the user clicks on the button, open the modal 
 btn.onclick = function() {

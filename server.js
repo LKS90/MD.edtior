@@ -7,9 +7,9 @@ var mongoose = require('mongoose');
 var LocalStrategy = require('passport-local');
 
 var app = express();
+var jsonParser= bodyParser.json();
+var urlencodeParser = bodyParser.urlencoded({extended: false});
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(require('express-session')({
    secret: 'TEST',
@@ -28,6 +28,15 @@ passport.deserializeUser(Account.deserializeUser());
 
 // mongoose
 mongoose.connect('mongodb://localhost/passport_local_mongoose');
+
+//============ CUSTOM FUNCTIONS
+
+mergeJsonObject = function(obj1, obj2) {
+    var result={};
+    for(var key in obj1) result[key]=obj1[key];
+    for(var key in obj2) result[key]=obj2[key];
+    return result;
+};
 
 //============ SETUP
 var input = "./public/content/default.md";
@@ -55,21 +64,20 @@ app.set('view engine', 'ejs');
 
 //============ ROUTES
 app.get('/', function(req, res) {
-  res.render('pad', defaultContent);
+    content = mergeJsonObject(defaultContent, {login: false});
+    res.render('pad', content);
 });
 
-
-app.post('/login', passport.authenticate('local'), function(req, res) {
-  res.redirect('/');
+app.get('/login', function(req, res) {
+    content = mergeJsonObject(defaultContent, {login: true});
+    res.render('pad', content);
 });
 
-
-app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-        message: err.message, 
-        error: err
-    });
+app.post('/login', urlencodeParser, function(req, res) {
+  passport.authenticate('local', {
+      successRedirect: '/',
+      failureRedirect: '/login'
+  })
 });
 
 //============ PORT
