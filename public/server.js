@@ -29,8 +29,8 @@ passport.deserializeUser(Account.deserializeUser());
 mongoose.connect('mongodb://localhost/passport_local_mongoose');
 
 //============ SETUP
-var input = "./public/content/default.md";
-var output = "./public/content/default.json";
+var input = "./content/default.md";
+var output = "./content/default.json";
 var options = { encoding: 'utf8'};
 var fs = require("fs");
 
@@ -46,7 +46,7 @@ rawInput.forEach(function(element, i) {
 }, this);
 
 fs.writeFileSync(output, rawOutput);
-var defaultContent = require('./public/content/default.json')
+var defaultContent = require('./content/default.json')
 
 //============ EXPRESS
 // set the view engine to ejs
