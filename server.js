@@ -63,17 +63,6 @@ app.post('/login', passport.authenticate('local'), function(req, res) {
   res.redirect('/');
 });
 
-//============ DEFAULT ERROR OUTPUT
-app.use(function (err, req, res, next) {
-  var status = err.status || err.statusCode
-
-  if (typeof status !== 'number' || status >= 500) {
-    next(err)
-    return
-  }
-  console.log(status + ' ' + err.message)
-})
-
 //============ PORT
 // listen on port 8080 (for localhost) or the port defined for heroku
 var port = process.env.PORT || 8080;
