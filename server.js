@@ -18,6 +18,7 @@ app.use(require('express-session')({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(express.static(__dirname + '/public'));
 
 // passport config
 var Account = require('./models/account');
@@ -29,8 +30,8 @@ passport.deserializeUser(Account.deserializeUser());
 mongoose.connect('mongodb://localhost/passport_local_mongoose');
 
 //============ SETUP
-var input = "./content/default.md";
-var output = "./content/default.json";
+var input = "./public/content/default.md";
+var output = "./public/content/default.json";
 var options = { encoding: 'utf8'};
 var fs = require("fs");
 
