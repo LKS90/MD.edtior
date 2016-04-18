@@ -29,8 +29,8 @@ passport.deserializeUser(Account.deserializeUser());
 mongoose.connect('mongodb://localhost/passport_local_mongoose');
 
 //============ SETUP
-var input = require("./content/default.md");
-var output = require("./content/default.json");
+var input = "./content/default.md";
+var output = "./content/default.json";
 var options = { encoding: 'utf8'};
 var fs = require("fs");
 
@@ -51,9 +51,6 @@ var defaultContent = require('./content/default.json')
 //============ EXPRESS
 // set the view engine to ejs
 app.set('view engine', 'ejs');
-
-// public folder to store assets
-app.use(express.static(__dirname + '/public'));
 
 //============ ROUTES
 app.get('/', function(req, res) {
