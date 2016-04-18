@@ -59,6 +59,10 @@ app.get('/', function(req, res) {
 });
 
 
+app.post('/login', passport.authenticate('local'), function(req, res) {
+  res.redirect('/');
+});
+
 //============ PORT
 // listen on port 8080 (for localhost) or the port defined for heroku
 var port = process.env.PORT || 8080;
