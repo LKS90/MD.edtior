@@ -47,7 +47,7 @@ rawInput.forEach(function(element, i) {
 }, this);
 
 fs.writeFileSync(output, rawOutput);
-var defaultContent = require('./content/default.json')
+var defaultContent = require('./public/content/default.json')
 
 //============ EXPRESS
 // set the view engine to ejs
