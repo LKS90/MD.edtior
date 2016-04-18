@@ -39,8 +39,8 @@ mergeJsonObject = function(obj1, obj2) {
 };
 
 //============ SETUP
-var input = "./content/default.md";
-var output = "./content/default.json";
+var input = "/content/default.md";
+var output = "/content/default.json";
 var options = { encoding: 'utf8'};
 var fs = require("fs");
 
@@ -56,7 +56,7 @@ rawInput.forEach(function(element, i) {
 }, this);
 
 fs.writeFileSync(output, rawOutput);
-var defaultContent = require('./content/default.json')
+var defaultContent = require('/content/default.json')
 
 //============ EXPRESS
 // set the view engine to ejs
