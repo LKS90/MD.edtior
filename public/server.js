@@ -29,8 +29,8 @@ passport.deserializeUser(Account.deserializeUser());
 mongoose.connect('mongodb://localhost/passport_local_mongoose');
 
 //============ SETUP
-var input = "./content/default.md";
-var output = "./content/default.json";
+var input = require("./content/default.md");
+var output = require("./content/default.json");
 var options = { encoding: 'utf8'};
 var fs = require("fs");
 
