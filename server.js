@@ -57,6 +57,7 @@ rawInput.forEach(function(element, i) {
 
 fs.writeFileSync(output, rawOutput);
 var defaultContent = require('./public/content/default.json');
+var modalLogin = fs.readFileSync("./views/modalLogin.ejs", 'utf8');
 
 //============ EXPRESS
 // set the view engine to ejs
@@ -64,21 +65,21 @@ app.set('view engine', 'ejs');
 
 //============ ROUTES
 app.get('/', function(req, res) {
-    content = mergeJsonObject(defaultContent, {login: false});
+    content = mergeJsonObject(defaultContent, {login: false, modal: modalLogin});
     res.render('pad', content);
 });
 
 app.get('/login', function(req, res) {
-    content = mergeJsonObject(defaultContent, {login: true});
+    content = mergeJsonObject(defaultContent, {login: true, modal: modalLogin});
     res.render('pad', content);
 });
 
-app.post('/login', urlencodeParser, function(req, res) {
-  passport.authenticate('local', {
-      successRedirect: '/',
-      failureRedirect: '/login'
-  })
-});
+app.post('/login',
+    passport.authenticate('local'),
+    function(req, res) {
+        res.render('pad', {login: true, modal: "YAY"});
+  }
+);
 
 //============ PORT
 // listen on port 8080 (for localhost) or the port defined for heroku
