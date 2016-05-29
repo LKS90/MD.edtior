@@ -23,37 +23,21 @@ app.use(passport.session());
 app.use(express.static(__dirname + '/public'));
 
 // postgres
-pg.connect(conString, function(err, client, done) {
-  if(err) {
-    return console.error('error fetching client from pool', err);
-  }
-  client.query('SELECT * FROM user', ['1'], function(err, result) {
-    //call `done()` to release the client back to the pool
-    done();
-
-    if(err) {
-      return console.error('error running query', err);
-    }
-    console.log(result.rows[0].number);
-    //output: 1
-  });
-});
 
 // passport config
 passport.use(new LocalStrategy({
     usernameField: 'email',
-    passwordField: 'pass'
-}, (username, password, done) => {
+    passwordField: 'password'
+},
+(username, password, done) => {
     console.log("Login process: ", username);
-    return pg.one("SELECT uid, name, email, role FROM user" +
-        "WHERE email=$1 AND password=$2", [username, password])
-        .then((result) => {
+    var user = pg.connect("SELECT uid, name, email, role FROM users" +
+        "WHERE email=$1 AND password=$2", [username, password],
+        (err, result) => {
+            if (err) return done(null, false, {message: "Wrong email or password"});
             return done(null, result);
-        })
-        .catch((err) => {
-            console.log("/login: ", err);
-            return done(null, false, {message: "Wrong email or password"});
         });
+    return user;
 }));
 
 passport.serializeUser((user, done) => {
@@ -63,7 +47,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser((id, done) => {
     console.log("deserialize ", id);
-    pg.one("SELECT uid, name, email, role FROM user" +
+    db.one("SELECT uid, name, email, role FROM user" +
         "WHERE uid = $1", [id])
         .then((user) => {
             done(null, user);
@@ -118,16 +102,20 @@ app.get('/login', function(req, res) {
     res.render('pad', content);
 });
 
-app.post('/login',
+app.post('/login', urlencodeParser, (req, res) => {
+    console.log(req.body);
     passport.authenticate('local'),
-    (req, res) => {
-        res.render('pad', {
-            login: true,
-            modal: "YAY"
-        });
-  }
+    {
+        successRedirect: renderSuccess(res),
+        failureRedirect: '/login'
+}}
 );
 
+function renderSuccess(res) { res.render('pad', mergeJsonObject(defaultContent, {
+            login: true,
+            modal: "YAY"
+        }));
+}
 //============ PORT
 // listen on port 8080 (for localhost) or the port defined for heroku
 var port = process.env.PORT || 8080;
