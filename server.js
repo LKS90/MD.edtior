@@ -3,12 +3,14 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
-var mongoose = require('mongoose');
+var pg = require('pg');
 var LocalStrategy = require('passport-local');
 
 var app = express();
 var jsonParser= bodyParser.json();
 var urlencodeParser = bodyParser.urlencoded({extended: false});
+var conString = "postgres://mdedit:mdeditor@localhost/mdedit";
+
 app.use(logger('dev'));
 app.use(cookieParser());
 app.use(require('express-session')({
@@ -20,14 +22,56 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(__dirname + '/public'));
 
-// passport config
-var Account = require('./models/account');
-passport.use(new LocalStrategy(Account.authenticate()));
-passport.serializeUser(Account.serializeUser());
-passport.deserializeUser(Account.deserializeUser());
+// postgres
+pg.connect(conString, function(err, client, done) {
+  if(err) {
+    return console.error('error fetching client from pool', err);
+  }
+  client.query('SELECT * FROM user', ['1'], function(err, result) {
+    //call `done()` to release the client back to the pool
+    done();
 
-// mongoose
-mongoose.connect('mongodb://localhost/passport_local_mongoose');
+    if(err) {
+      return console.error('error running query', err);
+    }
+    console.log(result.rows[0].number);
+    //output: 1
+  });
+});
+
+// passport config
+passport.use(new LocalStrategy({
+    usernameField: 'email',
+    passwordField: 'pass'
+}, (username, password, done) => {
+    console.log("Login process: ", username);
+    return pg.one("SELECT uid, name, email, role FROM user" +
+        "WHERE email=$1 AND password=$2", [username, password])
+        .then((result) => {
+            return done(null, result);
+        })
+        .catch((err) => {
+            console.log("/login: ", err);
+            return done(null, false, {message: "Wrong email or password"});
+        });
+}));
+
+passport.serializeUser((user, done) => {
+    console.log("serialize ", user);
+    done(null, user.uid);
+});
+
+passport.deserializeUser((id, done) => {
+    console.log("deserialize ", id);
+    pg.one("SELECT uid, name, email, role FROM user" +
+        "WHERE uid = $1", [id])
+        .then((user) => {
+            done(null, user);
+        })
+        .catch((err) => {
+            done(new Error("User with the id ${id} does not exist."));
+        })
+});
 
 //============ CUSTOM FUNCTIONS
 
@@ -76,8 +120,11 @@ app.get('/login', function(req, res) {
 
 app.post('/login',
     passport.authenticate('local'),
-    function(req, res) {
-        res.render('pad', {login: true, modal: "YAY"});
+    (req, res) => {
+        res.render('pad', {
+            login: true,
+            modal: "YAY"
+        });
   }
 );
 
