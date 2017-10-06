@@ -1,0 +1,269 @@
+html, body, section, .full-height {
+    height: 100%;
+    overflow: hidden;
+}
+
+.container-fluid {
+    height: 96%;
+    width: auto;
+}
+
+.row {
+    height: 100%;
+}
+
+#pad{
+    font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
+    font-size: 2rem;
+    min-height: 100%;
+
+    border: none;
+    overflow: auto;
+    outline: none;
+
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+#markdown {
+    overflow: auto;
+    position: relative;
+    border-left: 0.2rem solid grey;
+    font-size: 2rem;
+}
+
+#markdown h1 {
+    color: #2C4405;
+    font-weight: bold;
+    text-shadow: 0.1rem 0.1rem 0.3rem rgba(0,0,0,0.2);
+}
+
+
+#markdown h2 {
+    color: #2C4405;
+    font-size: 2.5rem;
+    text-shadow: 0.1rem 0.1rem 0.3rem rgba(0,0,0,0.2);
+}
+
+#markdown table {
+    width: 100%;
+    padding: 1rem;
+    margin-bottom: 2rem;
+}
+
+#markdown th {
+    color: #ADCA80;
+    text-shadow: 0.1rem 0.1rem 0.3rem rgba(0,0,0,0.15);
+    font-weight: bold;
+    height: 2rem;
+}
+
+#markdown th, td {
+    border-bottom: .1rem solid #2C4405;
+    border-right: .1rem solid #2C4405;
+    padding: 0.8rem;
+}
+
+#markdown table thead tr th:last-child, table tbody tr td:last-child {
+    border-bottom: .1rem solid #2C4405;
+    border-right: none;
+    padding: 0.8rem;
+}
+
+#markdown tr:last-child td {
+    border-bottom: none;
+    border-right: .1rem solid #2C4405;
+    padding: 0.8rem;
+}
+
+#markdown th {
+    background-color: #4A6818;
+}
+
+#markdown td {
+    background-color: #ADCA80;
+}
+
+#markdown pre {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+
+
+#markdown tr:last-child td:last-child {
+    border-bottom: none;
+    border-right: none;
+    padding: 0.8rem;
+}
+
+nav {
+    background: none repeat scroll 0 0 padding-box #668631;
+    top: 0rem;
+    height: 6rem;
+    font-weight: bold;
+    font-size: 2rem;
+    position: relative;
+}
+
+nav button {
+    background-color: #2C4405;
+    color: #ADCA80;
+    border: 0.1rem solid rgba(1,1,1,.3);
+    border-radius: 0.5rem;
+    position: relative;
+    top: 1.45rem;
+    left: 1rem;
+}
+
+nav button:hover {
+    background-color: #4A6818;
+    color: #ADCA80;
+    box-shadow: 0 0.5rem 1rem 0 rgba(0,0,0,0.2), 0 0.4rem 1.2rem 0 rgba(0,0,0,0.19);
+    border: 0.1rem solid rgba(1,1,1,.2);
+    border-radius: 0.5rem;
+    position: relative;
+    top: 1.4rem;
+    left: 1rem;
+}
+
+.logo {
+    position: relative;
+    margin: 0rem;
+}
+
+.logo img {
+    width: 3rem;
+    height: auto;
+    position: absolute;
+    right: 1rem;
+    top: 1.3rem;
+}
+
+.logo p {
+    position: absolute;
+    font-size: 4rem;
+    color: #2C4405;
+    text-shadow: 0.1rem 0.1rem 0.3rem black;
+    right: 4.7rem;
+    top: 0.4rem;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+ }
+
+/* Modal Content/Box */
+.modal-content {
+    position: absolute;
+    left: 42.5%;
+    background-color: #fefefe;
+    margin: 15% auto 0px auto; /* 15% from the top and centered */
+    padding: 20px;
+    padding-left: 2%;
+    border: 1px solid #888;
+    width: 15%; /* Could be more or less, depending on screen size */
+}
+
+.modal-content input {
+    margin-bottom: 0.6rem; 
+}
+
+.modal-content button {
+    margin-top: 0.6rem;
+}
+
+.modal-content p {
+    font-weight: bold; 
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+ .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Toggle Button */
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 22px;
+    margin-bottom: -.3rem;
+    margin-right: .5rem; 
+}
+  
+/* Hide default HTML checkbox */
+.switch input {display:none;}
+  
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #D4E2BE;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+  
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: .3rem;
+    top: .1rem;
+    background-color: #3D4D23;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+  
+input:checked + .slider {
+    background-color: #77914D;
+}
+  
+input:focus + .slider {
+    box-shadow: 0 0 1px #77914D;
+}
+  
+input:checked + .slider:before {
+    -webkit-transform: translateX(22px);
+    -ms-transform: translateX(22px);
+    transform: translateX(22px);
+}
+  
+/* Rounded sliders */
+.slider.round {
+    border-radius: 30px;
+}
+  
+.slider.round:before {
+    border-radius: 50%;
+}
+
+#toggleLabel {
+    margin-bottom: -5px;
+}

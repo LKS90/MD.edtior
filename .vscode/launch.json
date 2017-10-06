@@ -2,36 +2,17 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Launch",
             "type": "node",
             "request": "launch",
+            "name": "Launch MDEdit",
             "program": "${workspaceRoot}/server.js",
-            "stopOnEntry": false,
-            "args": [],
-            "cwd": "${workspaceRoot}",
-            "preLaunchTask": null,
-            "runtimeExecutable": null,
-            "runtimeArgs": [
-                "--nolazy"
-            ],
-            "env": {
-                "NODE_ENV": "development"
-            },
-            "externalConsole": false,
-            "sourceMaps": false,
-            "outDir": null
+            "cwd": "${workspaceRoot}"
         },
         {
-            "name": "Attach",
             "type": "node",
             "request": "attach",
-            "port": 5858,
-            "address": "localhost",
-            "restart": false,
-            "sourceMaps": false,
-            "outDir": null,
-            "localRoot": "${workspaceRoot}",
-            "remoteRoot": null
+            "name": "Debug MDEdit",
+            "port": 5858
         }
     ]
 }

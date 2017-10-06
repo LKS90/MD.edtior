@@ -1,0 +1,7 @@
+<h1>Register</h1>
+<form>
+    <p>Email: </p><input type="email" name="email" placeholder="Email"><br>
+    <p>Password: </p><input id="password" name="password" type="password" pattern="^\S{6,}$" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Must have at least 6 characters' : ''); if(this.checkValidity()) form.password_confirm.pattern = this.value;" placeholder="Password" required><br>
+    <p>Confirm Password: </p><input id="password_confirm" name="password_confirm" type="password" pattern="^\S{6,}$" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same Password as above' : '');" placeholder="Confirm Password" required><br>
+    <input type="submit" value="Register" type="button" name="register" formaction="/register" formmethod="POST">
+</form>

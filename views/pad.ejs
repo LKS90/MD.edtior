@@ -3,6 +3,7 @@
 <head>
     <title>Realtime Markdown Viewer</title>
     <link href="bootstrap.min.css" rel="stylesheet">
+    <link href="katex.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
 </head>
 
@@ -12,32 +13,58 @@
             <p>md.editor</p>
             <img src="logo_small.png">
         </div>
-        <button id="signinButton">Sign In</button>
+        <% if (logged_in) {%>
+            <button id="userButton" href="/"><%= email %></button>
+            <button id="logoutButton" href="/logout">Log Out</button>
+        <% } else { %>
+            <button id="loginButton" href="/login">Log In</button>
+            <button id="registerButton" href="/register">Register</button>
+        <% } %>
+            <button id="editToggle" href="/view">
+            <label class="switch">
+                <input id="editSwitch" type="checkbox">
+                <span class="slider round"></span>
+                </label><span id="toggleLabel">Edit</span>
+            </button>
     </nav>
     
     <div class="container-fluid">
         <div class="row">
-            <textarea class="col-md-6 hidden-sm hidden-xs full-height" id="pad"><% for(var i = 0; i < content.length; i++) { %>
+            <textarea class="col-md-6 <% if(showResult) {%>hidden-sm hidden-xs full-height<% } %>" id="pad" <% if(!showResult) {%> style="width:100%;" <% } %> ><% for(var i = 0; i < content.length; i++) { %>
 <%- content[i] -%>
 <% } %>
             </textarea>
-            <div class="col-md-6 full-height" id="markdown"></div>
+            <div class="col-md-6 full-height" id="markdown" <% if(!showResult) {%> style="visibility:hidden; width:0%;" <% } %>></div>
         </div>
     </div>
     
-    <div id="signinModal" class="modal">
+    <div id="modal" class="modal">
         <div class="modal-content">
             <span class="close">x</span>
-            <% include modalLogin.ejs %>
+            <% if (modal == "login") { %>
+                <% include modalLogin.ejs %>
+            <% } %>
+            <% if (modal == "register") { %>
+                <% include modalRegister.ejs %>
+            <% } %>
+            <% if (modal == "registerSuccess") { %>
+                <% include modalRegisterSuccess.ejs %>
+            <% } %>
+            <% if (modal == "registerFail") { %>
+                <% include modalRegisterFail.ejs %>
+            <% } %>
+            <% if (modal == "loginSuccess") { %>
+                <% include modalLoginSuccess.ejs %>
+            <% } %>
+            <% if (modal == "loginFail") { %>
+                <% include modalLoginFail.ejs %>
+            <% } %>
         </div>
     </div>
     
+    <script src="katex.js"></script>
     <script src="showdown.min.js"></script>
-    <script src="script.js"></script>
-    <script>
-<% if (login) { %>
-document.getElementById("signinModal").style.display = "block"
-<% } %>
-    </script>
+    <script src="script.js" showResult='<%= showResult %>'></script>
+<% if (modal) { %><script>document.getElementById("modal").style.display = "block";</script><% } %>
 </body>
 </html>
